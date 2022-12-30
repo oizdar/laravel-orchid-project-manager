@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-VerySecretPassword}
+      POSTGRES_USER: ${POSTGRES_USER:-laravel}
+    volumes:
+       - ./docker/db/data:/var/lib/postgresql/data:rw
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+
+volumes:
+  db-data:
