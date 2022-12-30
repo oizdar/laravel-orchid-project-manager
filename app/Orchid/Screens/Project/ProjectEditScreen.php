@@ -2,24 +2,30 @@
 
 namespace App\Orchid\Screens\Project;
 
+use App\Models\Project;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
 class ProjectEditScreen extends Screen
 {
+    public Project $project;
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(Project $project): iterable
     {
-        return [];
+        return [
+            'project' => $project
+        ];
     }
 
     /**
@@ -29,12 +35,12 @@ class ProjectEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Create Project';
+        return $this->project->exists ? 'Edit project' : 'Create Project';
     }
 
     public function description(): ?string
     {
-        return 'You can create new project here';
+        return $this->project->exists ? 'Update project information' : 'You can create new project here';
     }
 
     /**
@@ -47,7 +53,18 @@ class ProjectEditScreen extends Screen
         return [
             Button::make('Create Project')
                 ->icon('rocket')
-                ->method('createProject')
+                ->method('create')
+                ->canSee(!$this->project->exists),
+
+            Button::make('Update')
+                ->icon('note')
+                ->method('update')
+                ->canSee($this->project->exists),
+
+            Button::make('Remove')
+                ->icon('trash')
+                ->method('remove')
+                ->canSee($this->project->exists),
         ];
     }
 
@@ -60,24 +77,24 @@ class ProjectEditScreen extends Screen
     {
         return [
             Layout::rows([
-                Input::make('subject')
+                Input::make('project.subject')
                     ->title('Subject')
                     ->required()
                     ->min(6)
                     ->max(255)
                     ->help('Enter the subject of new project'),
-                TextArea::make('description')
+                TextArea::make('project.description')
                     ->title('Description')
                     ->required()
                     ->placeholder('Project description.')
                     ->help('Enter short description of new Project'),
-                DateTimer::make('startDate')
+                DateTimer::make('project.start_date')
                     ->title('Start Date')
                     ->format('Y-m-d')
                     ->required()
                     ->placeholder('Project starts on')
                     ->help('Select date when project will start'),
-                DateTimer::make('endDate')
+                DateTimer::make('project.end_date')
                     ->title('End Date')
                     ->format('Y-m-d')
                     ->placeholder('Project planned until')
@@ -87,13 +104,39 @@ class ProjectEditScreen extends Screen
         ];
     }
 
-    public function createProject(Request $request)
+    public function create(Project $project, Request $request): RedirectResponse
+    {
+        $this->validateRequest($request);
+        $project->fill($request->get('project'))->save();
+
+        Alert::info('Project creating successful');
+
+        return redirect()->route('platform.project.edit', ['id' => $project->id]);
+    }
+
+    public function update(Project $project, Request $request): void
+    {
+        $this->validateRequest($request);
+        $project->fill($request->get('project'))->save();
+
+        Alert::info('Project updated successful');
+    }
+
+    private function validateRequest(Request $request): void
     {
         $request->validate([
-            'subject' => 'required|min:6|max:255',
-            'description' => 'required|min:10|max:255',
-            'startDate'   => 'required|date|after_or_equal:today',
-            'endDate'   => 'nullable|date|after:startDate',
+            'project.subject' => 'required|min:6|max:255',
+            'project.description' => 'required|min:10|max:255',
+            'project.start_date'   => 'required|date|after_or_equal:today',
+            'project.end_date'   => 'nullable|date|after:startDate',
         ]);
+    }
+
+    public function remove(Project $project): RedirectResponse
+    {
+        $project->delete();
+        Alert::info('You have successfully deleted the project.');
+
+        return redirect()->route('platform.project.create');
     }
 }

@@ -103,4 +103,9 @@ Route::screen('project-create', ProjectEditScreen::class)
         ->parent('platform.index')
         ->push('Create Project'));;
 
+Route::screen('project-edit/{id?}', ProjectEditScreen::class)
+    ->name('platform.project.edit')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Edit Project'));;
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

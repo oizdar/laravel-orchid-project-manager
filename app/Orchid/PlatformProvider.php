@@ -30,7 +30,7 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             Menu::make('Create Project')
                 ->icon('pin')
-                ->route('platform.project.create')
+                ->route('platform.project.edit')
                 ->title('Projects'),
 
             Menu::make('Example screen')
