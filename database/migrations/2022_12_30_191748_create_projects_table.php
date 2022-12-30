@@ -18,8 +18,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('subject');
             $table->text('description');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->date('start_date');
+            $table->date('end_date')
+                ->nullable();
 
         });
     }
