@@ -11,6 +11,7 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Project\ProjectEditScreen;
+use App\Orchid\Screens\Project\ProjectListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -97,6 +98,12 @@ Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platfor
 Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
 Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
 
+Route::screen('project-list', ProjectListScreen::class)
+    ->name('platform.projects')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Projects List'));;
+
 Route::screen('project-create', ProjectEditScreen::class)
     ->name('platform.project.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
@@ -106,6 +113,6 @@ Route::screen('project-create', ProjectEditScreen::class)
 Route::screen('project-edit/{id?}', ProjectEditScreen::class)
     ->name('platform.project.edit')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
+        ->parent('platform.projects')
         ->push('Edit Project'));;
 //Route::screen('idea', Idea::class, 'platform.screens.idea');
