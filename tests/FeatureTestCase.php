@@ -2,13 +2,16 @@
 
 namespace Tests;
 
+
 use App\Models\User;
 
-trait PrepareAdminUser 
+class FeatureTestCase extends TestCase
 {
-    private ?User $admin;
+    use CreatesApplication;
 
-    protected function createAdmin(): void
+    protected ?User $admin;
+
+    protected function setUp(): void
     {
         parent::setUp();
 

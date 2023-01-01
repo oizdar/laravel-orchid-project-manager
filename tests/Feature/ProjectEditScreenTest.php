@@ -3,24 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
-use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class ProjectEditScreenTest extends TestCase
+class ProjectEditScreenTest extends FeatureTestCase
 {
     use ScreenTesting;
-
-    private ?User $admin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->admin ??= User::factory()
-            ->admin()
-            ->create();
-    }
 
     public function testProjectCreate()
     {
@@ -50,7 +38,10 @@ class ProjectEditScreenTest extends TestCase
     {
         $project = Project::latest()->first();
 
-        $screenEdit = $this->screen('platform.project.edit')->parameters(['id' => $project->id])->actingAs($this->admin);
+        $screenEdit = $this->screen('platform.project.edit')
+            ->parameters(['id' => $project->id])
+            ->actingAs($this->admin);
+
         $screenEdit->display()
             ->assertSeeInOrder([
                 'Edit Project',

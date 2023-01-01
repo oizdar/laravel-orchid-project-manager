@@ -5,22 +5,12 @@ namespace Tests\Feature;
 use App\Models\Project;
 use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
+use Tests\FeatureTestCase;
 use Tests\TestCase;
 
-class ProjectListScreenTest extends TestCase
+class ProjectListScreenTest extends FeatureTestCase
 {
     use ScreenTesting;
-
-    private ?User $admin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->admin ??= User::factory()
-            ->admin()
-            ->create();
-    }
 
     public function testProjectCreate()
     {

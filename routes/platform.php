@@ -12,6 +12,7 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Project\ProjectEditScreen;
 use App\Orchid\Screens\Project\ProjectListScreen;
+use App\Orchid\Screens\Project\ProjectViewScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -107,12 +108,17 @@ Route::screen('project-list', ProjectListScreen::class)
 Route::screen('project-create', ProjectEditScreen::class)
     ->name('platform.project.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
+        ->parent('platform.projects')
         ->push('Create Project'));;
 
 Route::screen('project-edit/{id?}', ProjectEditScreen::class)
     ->name('platform.project.edit')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.projects')
-        ->push('Edit Project'));;
-//Route::screen('idea', Idea::class, 'platform.screens.idea');
+        ->push('Edit Project'));
+
+Route::screen('project-view/{id?}', ProjectViewScreen::class)
+    ->name('platform.project.view')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.projects')
+        ->push('Project Details'));

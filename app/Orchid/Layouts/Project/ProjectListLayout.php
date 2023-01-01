@@ -30,7 +30,7 @@ class ProjectListLayout extends Table
             TD::make('subject', 'Subject')
                 ->render(function (Project $project) {
                     return Link::make($project->subject)
-                        ->route('platform.project.edit', $project);
+                        ->route('platform.project.view', $project);
                 })
                 ->width('500px')
                 ->sort()

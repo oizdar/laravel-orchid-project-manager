@@ -3,42 +3,30 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
-use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class ProjectListScreenTest extends TestCase
+class ProjectViewScreenTest extends FeatureTestCase
 {
     use ScreenTesting;
 
-    private ?User $admin;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->admin ??= User::factory()
-            ->admin()
-            ->create();
-    }
-
-    public function testProjectCreate()
+    public function testProjectView()
     {
         $project = Project::factory()->create();
 
-        $screen = $this->screen('platform.projects')->actingAs($this->admin);
+        $screen = $this->screen('platform.project.view')
+            ->parameters(['id' => $project->id])
+            ->actingAs($this->admin);
+
         $screen->display()
             ->assertSeeInOrder([
-                'Projects List',
-                'All projects',
-                'Subject',
-                'Description',
-                'Start Date',
-                'End Date',
                 $project->subject,
                 $project->description,
+                'Start Date',
+                'End Date',
                 $project->start_date,
-                $project->due_date
+                $project->due_date,
+                'Tasks:'
             ]);
     }
 }

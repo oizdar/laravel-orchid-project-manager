@@ -65,6 +65,7 @@ class ProjectEditScreen extends Screen
             Button::make('Remove')
                 ->icon('trash')
                 ->method('remove')
+                ->confirm('Are you going to delete project: ' . $this->project->subject)
                 ->canSee($this->project->exists),
         ];
     }
@@ -112,7 +113,7 @@ class ProjectEditScreen extends Screen
     public function remove(Project $project): RedirectResponse
     {
         $project->delete();
-        Alert::info('You have successfully deleted the project.');
+        Alert::info("You have successfully deleted project: $project->subject" );
 
         return redirect()->route('platform.projects');
     }
