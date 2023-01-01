@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Project;
 
 use App\Models\Project;
+use App\Orchid\Layouts\Project\ProjectEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
@@ -35,7 +36,7 @@ class ProjectEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->project->exists ? 'Edit project' : 'Create Project';
+        return $this->project->exists ? 'Edit Project' : 'Create New Project';
     }
 
     public function description(): ?string
@@ -76,31 +77,7 @@ class ProjectEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::rows([
-                Input::make('project.subject')
-                    ->title('Subject')
-                    ->required()
-                    ->min(6)
-                    ->max(255)
-                    ->help('Enter the subject of new project'),
-                TextArea::make('project.description')
-                    ->title('Description')
-                    ->required()
-                    ->placeholder('Project description.')
-                    ->help('Enter short description of new Project'),
-                DateTimer::make('project.start_date')
-                    ->title('Start Date')
-                    ->format('Y-m-d')
-                    ->required()
-                    ->placeholder('Project starts on')
-                    ->help('Select date when project will start'),
-                DateTimer::make('project.end_date')
-                    ->title('End Date')
-                    ->format('Y-m-d')
-                    ->placeholder('Project planned until')
-                    ->help('Select when do you plan to complete project'),
-
-            ])
+            ProjectEditLayout::class
         ];
     }
 
@@ -137,6 +114,6 @@ class ProjectEditScreen extends Screen
         $project->delete();
         Alert::info('You have successfully deleted the project.');
 
-        return redirect()->route('platform.project.create');
+        return redirect()->route('platform.projects');
     }
 }

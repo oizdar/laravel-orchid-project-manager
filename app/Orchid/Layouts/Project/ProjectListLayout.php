@@ -32,13 +32,18 @@ class ProjectListLayout extends Table
                     return Link::make($project->subject)
                         ->route('platform.project.edit', $project);
                 })
+                ->width('500px')
                 ->sort()
-                ->filter(),
-            TD::make('description', 'Description'),
+                ->filter()
+                ->cantHide(),
+            TD::make('description', 'Description')
+                ->width('500px'),
             TD::make('start_date', 'Start date')
+                ->width('110px')
                 ->sort()
                 ->filter(TD::FILTER_DATE_RANGE),
             TD::make('end_date', 'Due date')
+                ->width('110px')
                 ->sort()
                 ->filter(TD::FILTER_DATE_RANGE),
         ];

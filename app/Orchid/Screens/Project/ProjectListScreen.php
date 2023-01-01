@@ -17,7 +17,7 @@ class ProjectListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'projects' => Project::filters()->defaultSort('id')->paginate()
+            'projects' => Project::filters()->defaultSort('id', 'DESC')->paginate()
         ];
     }
 
