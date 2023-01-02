@@ -27,8 +27,12 @@ return new class extends Migration
             ;
             $table->enum('status', array_column(TaskStatusesEnum::cases(), 'value'));
             $table->foreignIdFor(User::class)
-                ->nullable();
-            $table->foreignIdFor(Project::class);
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+            $table->foreignIdFor(Project::class)
+                ->constrained()
+                ->cascadeOnDelete();
         });
     }
 
