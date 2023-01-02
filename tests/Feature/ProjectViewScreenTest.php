@@ -21,11 +21,16 @@ class ProjectViewScreenTest extends FeatureTestCase
         $screen->display()
             ->assertSeeInOrder([
                 $project->subject,
+                'Id',
+                $project->id,
+                'Project Description',
                 $project->description,
                 'Start Date',
                 $project->start_date,
                 'End Date',
                 $project->end_date,
+                'Created',
+                'Updated',
             ]);
     }
 }

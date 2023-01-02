@@ -64,13 +64,12 @@ class ProjectViewScreen extends Screen
         return [
             Layout::legend('project', [
                 Sight::make('id')->popover('Identifier, a symbol which uniquely identifies an object or record'),
-                Sight::make('subject', 'Subject'),
                 Sight::make('description', 'Project Description'),
                 Sight::make('start_date', 'Start Date'),
                 Sight::make('end_date', 'End Date '),
                 Sight::make('created_at', 'Created'),
                 Sight::make('updated_at', 'Updated'),
-            ])
+            ])->title($this->project->subject)
         ];
     }
 
