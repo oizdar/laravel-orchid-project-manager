@@ -63,4 +63,9 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
