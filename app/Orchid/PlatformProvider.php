@@ -37,11 +37,17 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('rocket')
                 ->route('platform.project.create'),
 
+            Menu::make('Tasks list')
+                ->icon('table')
+                ->route('platform.tasks')
+                ->title('Tasks'),
+
             Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')
                 ->title('Navigation')
                 ->badge(fn () => 6),
+
 
             Menu::make('Dropdown menu')
                 ->icon('code')
