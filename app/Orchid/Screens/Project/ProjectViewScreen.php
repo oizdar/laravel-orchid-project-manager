@@ -3,15 +3,11 @@
 namespace App\Orchid\Screens\Project;
 
 use App\Models\Project;
-use App\Orchid\Layouts\Project\ProjectEditLayout;
-use App\Orchid\Layouts\Project\ProjectListLayout;
-use App\Orchid\Layouts\Project\ProjectViewLayout;
 use Illuminate\Http\RedirectResponse;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Sight;
-use Orchid\Support\Color;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
