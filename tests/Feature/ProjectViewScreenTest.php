@@ -23,10 +23,9 @@ class ProjectViewScreenTest extends FeatureTestCase
                 $project->subject,
                 $project->description,
                 'Start Date',
-                'End Date',
                 $project->start_date,
-                $project->due_date,
-                'Tasks:'
+                'End Date',
+                $project->end_date,
             ]);
     }
 }

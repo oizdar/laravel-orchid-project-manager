@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
-use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
 use Tests\FeatureTestCase;
-use Tests\TestCase;
 
 class ProjectListScreenTest extends FeatureTestCase
 {

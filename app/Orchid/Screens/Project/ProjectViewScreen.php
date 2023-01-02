@@ -66,8 +66,8 @@ class ProjectViewScreen extends Screen
                 Sight::make('id')->popover('Identifier, a symbol which uniquely identifies an object or record'),
                 Sight::make('subject', 'Subject'),
                 Sight::make('description', 'Project Description'),
-                Sight::make('start_date', 'Project starting date'),
-                Sight::make('end_date', 'Due date '),
+                Sight::make('start_date', 'Start Date'),
+                Sight::make('end_date', 'End Date '),
                 Sight::make('created_at', 'Created'),
                 Sight::make('updated_at', 'Updated'),
             ])

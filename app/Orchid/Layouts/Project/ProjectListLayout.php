@@ -38,11 +38,11 @@ class ProjectListLayout extends Table
                 ->cantHide(),
             TD::make('description', 'Description')
                 ->width('500px'),
-            TD::make('start_date', 'Start date')
+            TD::make('start_date', 'Start Date')
                 ->width('110px')
                 ->sort()
                 ->filter(TD::FILTER_DATE_RANGE),
-            TD::make('end_date', 'Due date')
+            TD::make('end_date', 'End Date')
                 ->width('110px')
                 ->sort()
                 ->filter(TD::FILTER_DATE_RANGE),
