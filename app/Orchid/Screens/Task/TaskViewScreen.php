@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\Task;
 use App\Enums\TaskStatusesEnum;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
@@ -15,6 +16,13 @@ use Orchid\Support\Facades\Layout;
 class TaskViewScreen extends Screen
 {
     public Task $task;
+
+    public function permission(): ?iterable
+    {
+        return [
+            'tasks.view'
+        ];
+    }
 
     public function query(Task $task): iterable
     {
@@ -40,15 +48,23 @@ class TaskViewScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Link::make('Edit')
+        $links = [];
+        if(Auth::user()->hasAccess('projects.delete')) {
+            $links[] = Link::make('Edit')
                 ->icon('pencil')
-                ->route('platform.task.edit', ['id' => $this->task->id]),
-            Button::make('Remove')
+                ->route('platform.task.edit', ['id' => $this->task->id]);
+        }
+
+        if(Auth::user()->hasAccess('projects.delete')) {
+            $links[] = Button::make('Remove')
                 ->icon('trash')
                 ->confirm('Are you going to delete task: ' . $this->task->name)
-                ->method('remove'),
-        ];
+                ->method('remove');
+
+        }
+
+        return $links;
+
     }
 
     /**

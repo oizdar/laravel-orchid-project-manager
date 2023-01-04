@@ -6,22 +6,22 @@ use App\Models\Project;
 use App\Orchid\Layouts\Project\ProjectEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\DateTimer;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
-use Orchid\Support\Facades\Layout;
 
 class ProjectEditScreen extends Screen
 {
     public Project $project;
-    /**
-     * Fetch data to be displayed on the screen.
-     *
-     * @return array
-     */
+
+    public function permission(): ?iterable
+    {
+        return [
+            'projects.edit'
+        ];
+    }
+
     public function query(Project $project): iterable
     {
         return [
@@ -51,7 +51,7 @@ class ProjectEditScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
+        $links = [
             Button::make('Create Project')
                 ->icon('rocket')
                 ->method('create')
@@ -61,13 +61,17 @@ class ProjectEditScreen extends Screen
                 ->icon('note')
                 ->method('update')
                 ->canSee($this->project->exists),
+        ];
 
-            Button::make('Remove')
+        if(Auth::user()->hasAccess('projects.delete')) {
+            $links[] = Button::make('Remove')
                 ->icon('trash')
                 ->method('remove')
                 ->confirm("Are you going to delete project: {$this->project->subject} With all its Tasks!!! Are you sure?")
-                ->canSee($this->project->exists),
-        ];
+                ->canSee($this->project->exists);
+        }
+
+        return $links;
     }
 
     /**

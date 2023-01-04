@@ -4,16 +4,19 @@ namespace App\Orchid\Screens\Project;
 
 use App\Models\Project;
 use App\Orchid\Layouts\Project\ProjectListLayout;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class ProjectListScreen extends Screen
 {
-    /**
-     * Fetch data to be displayed on the screen.
-     *
-     * @return array
-     */
+    public function permission(): ?iterable
+    {
+        return [
+            'projects.view'
+        ];
+    }
+
     public function query(): iterable
     {
         return [
@@ -43,11 +46,15 @@ class ProjectListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Link::make('Create new')
-                ->icon('pencil')
-                ->route('platform.project.create')
-        ];
+        $links = [];
+
+        if(Auth::user()->hasAccess('projects.edit')) {
+          $links[] = Link::make('Create new')
+              ->icon('pencil')
+              ->route('platform.project.create');
+        }
+
+        return $links;
     }
 
     /**

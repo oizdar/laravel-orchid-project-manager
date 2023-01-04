@@ -31,20 +31,24 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Projects list')
                 ->icon('table')
                 ->route('platform.projects')
-                ->title('Projects'),
+                ->title('Projects')
+                ->permission('projects.view'),
 
             Menu::make('Create Project')
                 ->icon('rocket')
-                ->route('platform.project.create'),
+                ->route('platform.project.create')
+                ->permission('projects.edit'),
 
             Menu::make('Tasks list')
                 ->icon('task')
                 ->route('platform.tasks')
-                ->title('Tasks'),
+                ->title('Tasks')
+                ->permission('tasks.view'),
 
             Menu::make('Create Task')
                 ->icon('event')
-                ->route('platform.task.create'),
+                ->route('platform.task.create')
+                ->permission('tasks.edit'),
 
             Menu::make('Example screen')
                 ->icon('monitor')
@@ -131,7 +135,12 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users')),
+                ->addPermission('platform.systems.users', __('Users'))
+                ->addPermission('projects.view', __('View Pojects'))
+                ->addPermission('projects.edit', __('Edit Pojects'))
+                ->addPermission('projects.delete', __('Edit Pojects'))
+                ->addPermission('tasks.view', __('View Tasks'))
+                ->addPermission('tasks.edit', __('Edit Tasks')),
         ];
     }
 }

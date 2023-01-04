@@ -4,16 +4,19 @@ namespace App\Orchid\Screens\Task;
 
 use App\Models\Task;
 use App\Orchid\Layouts\Task\TaskListLayout;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class TaskListScreen extends Screen
 {
-    /**
-     * Fetch data to be displayed on the screen.
-     *
-     * @return array
-     */
+    public function permission(): ?iterable
+    {
+        return [
+            'tasks.view'
+        ];
+    }
+
     public function query(): iterable
     {
         return [
@@ -23,11 +26,6 @@ class TaskListScreen extends Screen
         ];
     }
 
-    /**
-     * The name of the screen displayed in the header.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
         return 'Tasks List';
@@ -45,11 +43,15 @@ class TaskListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Link::make('Create new')
-                ->icon('pencil')
-                ->route('platform.task.create')
-        ];
+        if(Auth::user()->hasAccess('tasks.edit')) {
+            return [
+                Link::make('Create new')
+                    ->icon('pencil')
+                    ->route('platform.task.create')
+            ];
+        }
+
+        return [];
     }
 
     /**

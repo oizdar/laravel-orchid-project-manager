@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Orchid\Layouts\Task\TaskEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -15,11 +16,14 @@ use Orchid\Support\Facades\Alert;
 class TaskEditScreen extends Screen
 {
     public Task $task;
-    /**
-     * Fetch data to be displayed on the screen.
-     *
-     * @return array
-     */
+
+    public function permission(): ?iterable
+    {
+        return [
+            'tasks.edit'
+        ];
+    }
+
     public function query(Task $task): iterable
     {
         return [
@@ -49,7 +53,7 @@ class TaskEditScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
+        $links = [
             Button::make('Create Task')
                 ->icon('rocket')
                 ->method('create')
@@ -59,13 +63,17 @@ class TaskEditScreen extends Screen
                 ->icon('note')
                 ->method('update')
                 ->canSee($this->task->exists),
+        ];
 
-            Button::make('Remove')
+        if(Auth::user()->hasAccess('tasks.delete')) {
+            $links[] = Button::make('Remove')
                 ->icon('trash')
                 ->method('remove')
                 ->confirm('Are you going to delete task: ' . $this->task->name)
-                ->canSee($this->task->exists),
-        ];
+                ->canSee($this->task->exists);
+        }
+
+        return $links;
     }
 
     /**
