@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TaskStatusesEnum;
 use App\Models\Task;
 use Orchid\Support\Testing\ScreenTesting;
 use Tests\FeatureTestCase;
@@ -24,7 +25,7 @@ class TaskViewScreenTest extends FeatureTestCase
                 'Id',
                 $task->id,
                 'Status',
-                $task->status,
+                TaskStatusesEnum::from($task->status)->name,
                 'Task Description',
                 $task->description,
                 'Start Date',

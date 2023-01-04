@@ -15,6 +15,7 @@ use App\Orchid\Screens\Project\ProjectListScreen;
 use App\Orchid\Screens\Project\ProjectViewScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Task\TaskEditScreen;
 use App\Orchid\Screens\Task\TaskListScreen;
 use App\Orchid\Screens\Task\TaskViewScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -129,10 +130,22 @@ Route::screen('task-list', TaskListScreen::class)
     ->name('platform.tasks')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push('Task List'));
+        ->push('Tasks List'));
 
 Route::screen('task-view/{id}', TaskViewScreen::class)
     ->name('platform.task.view')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
+        ->parent('platform.tasks')
         ->push('Task Details'));
+
+Route::screen('task-edit/{id}', TaskEditScreen::class)
+    ->name('platform.task.edit')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.tasks')
+        ->push('Edit Task'));
+
+Route::screen('task-create', TaskEditScreen::class)
+    ->name('platform.task.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.tasks')
+        ->push('Create Task'));

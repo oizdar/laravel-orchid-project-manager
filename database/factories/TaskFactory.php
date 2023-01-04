@@ -24,9 +24,11 @@ class TaskFactory extends Factory
             'description' => fake()->text(250),
             'start_date' => fake()->dateTimeBetween('tomorrow', '+1 month')->format('Y-m-d'),
             'end_date' => null,
-            'status' => fake()->randomElement(TaskStatusesEnum::casesValuesAsArray()),
+            'status' => fake()->randomElement(TaskStatusesEnum::values()),
             'user_id' => User::all('id')->random()->id ?? null,
             'project_id' => Project::all('id')->random()->id,
         ];
     }
+
+
 }

@@ -42,8 +42,8 @@ class TaskViewScreen extends Screen
     {
         return [
             Link::make('Edit')
-                ->icon('pencil'),
-//                ->route('platform.task.edit', ['id' => $this->task->id]),
+                ->icon('pencil')
+                ->route('platform.task.edit', ['id' => $this->task->id]),
             Button::make('Remove')
                 ->icon('trash')
                 ->confirm('Are you going to delete task: ' . $this->task->name)
@@ -61,12 +61,14 @@ class TaskViewScreen extends Screen
         return [
             Layout::legend('task', [
                 Sight::make('id')->popover('Identifier, a symbol which uniquely identifies an object or record'),
-                Sight::make('status', 'Status')->popover('Available statuses: ' . implode(', ', TaskStatusesEnum::casesValuesAsArray())),
+                Sight::make('status', 'Status')
+                    ->popover('Available statuses: ' . implode(', ', TaskStatusesEnum::names()))
+                    ->render(fn () => TaskStatusesEnum::from($this->task->status)->name ),
                 Sight::make('description', 'Task Description'),
                 Sight::make('start_date', 'Start Date'),
                 Sight::make('end_date', 'End Date '),
                 Sight::make('owner')->render(function() {
-                    return $this->task->user->name;
+                    return $this->task->user->name ?? 'Not selected';
                 }),
                 Sight::make('project')->render(function() {
                     return Link::make($this->task->project->subject)

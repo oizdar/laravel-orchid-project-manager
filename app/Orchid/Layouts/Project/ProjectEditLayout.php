@@ -34,6 +34,7 @@ class ProjectEditLayout extends Rows
                 ->help('Enter the subject of new project'),
             TextArea::make('project.description')
                 ->title('Description')
+                ->rows(7)
                 ->required()
                 ->placeholder('Project description.')
                 ->help('Enter short description of new Project'),

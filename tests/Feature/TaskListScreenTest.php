@@ -17,7 +17,7 @@ class TaskListScreenTest extends FeatureTestCase
         $screen = $this->screen('platform.tasks')->actingAs($this->admin);
         $screen->display()
             ->assertSeeInOrder([
-                'Task List',
+                'Tasks List',
                 'All tasks',
                 'Name',
                 'Status',

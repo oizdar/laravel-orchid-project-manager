@@ -42,6 +42,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.tasks')
                 ->title('Tasks'),
 
+            Menu::make('Create Task')
+                ->icon('event')
+                ->route('platform.task.create'),
+
             Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')

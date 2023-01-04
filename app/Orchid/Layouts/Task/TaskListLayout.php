@@ -49,16 +49,13 @@ class TaskListLayout extends Table
                 ->sort()
                 ->filter(TD::FILTER_DATE_RANGE),
             TD::make('user', 'User')
-                ->render(function (Task $task) {
-                    return Link::make($task->user->name)
-                        ->route('platform.task.view', ['id' => $task->id]);
-                })
+                ->render(fn (Task $task) => $task->user->name ?? '')
                 ->sort()
                 ->filter(),
             TD::make('project', 'Project')
                 ->render(function (Task $task) {
-                    return Link::make($task->project->subject);
-//                        ->route('platform.task.view', $project);
+                    return Link::make($task->project->subject)
+                        ->route('platform.project.view', ['id' => $task->project->id]);
                 })
                 ->sort()
                 ->filter(),

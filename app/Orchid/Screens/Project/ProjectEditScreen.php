@@ -65,7 +65,7 @@ class ProjectEditScreen extends Screen
             Button::make('Remove')
                 ->icon('trash')
                 ->method('remove')
-                ->confirm('Are you going to delete project: ' . $this->project->subject)
+                ->confirm("Are you going to delete project: {$this->project->subject} With all its Tasks!!! Are you sure?")
                 ->canSee($this->project->exists),
         ];
     }
