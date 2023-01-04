@@ -31,6 +31,10 @@ class TaskViewScreenTest extends FeatureTestCase
                 $task->start_date,
                 'End Date',
                 $task->end_date,
+                'Owner',
+                $task->user->name,
+                'Project',
+                $task->project->subject,
                 'Created',
                 'Updated',
             ]);

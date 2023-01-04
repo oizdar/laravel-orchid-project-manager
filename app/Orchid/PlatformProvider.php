@@ -38,7 +38,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.project.create'),
 
             Menu::make('Tasks list')
-                ->icon('table')
+                ->icon('task')
                 ->route('platform.tasks')
                 ->title('Tasks'),
 

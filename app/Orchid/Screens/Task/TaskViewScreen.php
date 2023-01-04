@@ -65,9 +65,18 @@ class TaskViewScreen extends Screen
                 Sight::make('description', 'Task Description'),
                 Sight::make('start_date', 'Start Date'),
                 Sight::make('end_date', 'End Date '),
+                Sight::make('owner')->render(function() {
+                    return $this->task->user->name;
+                }),
+                Sight::make('project')->render(function() {
+                    return Link::make($this->task->project->subject)
+                        ->icon('arrow-right')
+                        ->route('platform.project.view', ['id' => $this->task->project->id]);
+                }),
                 Sight::make('created_at', 'Created'),
                 Sight::make('updated_at', 'Updated'),
-            ])->title($this->task->name)
+            ])->title($this->task->name),
+
         ];
     }
 
