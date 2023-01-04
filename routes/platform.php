@@ -16,6 +16,7 @@ use App\Orchid\Screens\Project\ProjectViewScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\Task\TaskListScreen;
+use App\Orchid\Screens\Task\TaskViewScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -129,3 +130,9 @@ Route::screen('task-list', TaskListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push('Task List'));
+
+Route::screen('task-view/{id}', TaskViewScreen::class)
+    ->name('platform.task.view')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Task Details'));

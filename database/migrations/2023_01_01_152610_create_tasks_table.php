@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('end_date')
                 ->nullable()
             ;
-            $table->enum('status', array_column(TaskStatusesEnum::cases(), 'value'));
+            $table->enum('status', TaskStatusesEnum::casesValuesAsArray());
             $table->foreignIdFor(User::class)
                 ->nullable()
                 ->constrained()
