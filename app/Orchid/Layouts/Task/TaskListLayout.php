@@ -26,6 +26,8 @@ class TaskListLayout extends Table
      */
     protected function columns(): iterable
     {
+        $this->title = $this->query->get('tasksTitle');
+
         return [
             TD::make('name', 'Name')
                 ->render(function (Task $task) {

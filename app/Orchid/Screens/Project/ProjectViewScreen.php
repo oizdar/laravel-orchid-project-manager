@@ -3,6 +3,8 @@
 namespace App\Orchid\Screens\Project;
 
 use App\Models\Project;
+use App\Models\Task;
+use App\Orchid\Layouts\Task\TaskListLayout;
 use Illuminate\Http\RedirectResponse;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -18,7 +20,9 @@ class ProjectViewScreen extends Screen
     public function query(Project $project): iterable
     {
         return [
-            'project' => $project
+            'project' => $project,
+            'tasksTitle' => 'Project tasks list:',
+            'tasks' => $project->tasks
         ];
     }
 
@@ -65,7 +69,8 @@ class ProjectViewScreen extends Screen
                 Sight::make('end_date', 'End Date '),
                 Sight::make('created_at', 'Created'),
                 Sight::make('updated_at', 'Updated'),
-            ])->title($this->project->subject)
+            ])->title($this->project->subject),
+            TaskListLayout::class
         ];
     }
 

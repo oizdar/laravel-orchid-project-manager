@@ -17,7 +17,9 @@ class TaskListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'tasks' => Task::filters()->defaultSort('id', 'DESC')->paginate()
+            'tasks' => Task::filters()
+                ->defaultSort('id', 'DESC')
+                ->paginate()
         ];
     }
 
@@ -44,9 +46,9 @@ class TaskListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-//            Link::make('Create new')
-//                ->icon('pencil')
-//                ->route('platform.task.create')
+            Link::make('Create new')
+                ->icon('pencil')
+                ->route('platform.task.create')
         ];
     }
 
