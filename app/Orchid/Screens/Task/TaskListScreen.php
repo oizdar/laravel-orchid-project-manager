@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Task;
 
+use App\Enums\PermissionsEnum;
 use App\Models\Task;
 use App\Orchid\Layouts\Task\TaskListLayout;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class TaskListScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'tasks.view'
+            PermissionsEnum::TASKS_VIEW->value
         ];
     }
 

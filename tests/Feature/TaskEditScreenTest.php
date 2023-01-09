@@ -2,14 +2,60 @@
 
 namespace Tests\Feature;
 
-use App\Enums\TaskStatusesEnum;
+use App\Enums\PermissionsEnum;
 use App\Models\Task;
+use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
 use Tests\FeatureTestCase;
 
 class TaskEditScreenTest extends FeatureTestCase
 {
     use ScreenTesting;
+
+    public function testTaskCreateUnaccessibleWithoutProperPermission()
+    {
+        $user = User::factory()->create();
+        $screen = $this->screen('platform.task.create')->actingAs($user);
+
+        $screen->display()->assertStatus(403);
+    }
+
+    public function testTaskCreateAccessibleWithProperPermission()
+    {
+        $user = User::factory()
+            ->withPermisions([PermissionsEnum::PLATFORM_INDEX->value, PermissionsEnum::TASKS_EDIT->value])
+            ->create();
+
+        $screen = $this->screen('platform.task.create')->actingAs($user);
+
+        $screen->display()->assertStatus(200);
+    }
+
+    public function testTaskEditUnaccessibleWithoutProperPermission()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->create();
+
+        $screen = $this->screen('platform.task.edit')
+            ->parameters(['id' => $task->id])
+            ->actingAs($user);
+
+        $screen->display()->assertStatus(403);
+    }
+
+    public function testTaskEditAccessibleWithProperPermission()
+    {
+        $user = User::factory()
+            ->withPermisions([PermissionsEnum::PLATFORM_INDEX->value, PermissionsEnum::TASKS_EDIT->value])
+            ->create();
+        $task = Task::factory()->create();
+
+        $screen = $this->screen('platform.task.edit')
+            ->parameters(['id' => $task->id])
+            ->actingAs($user);
+
+        $screen->display()->assertStatus(200);
+    }
 
     public function testTaskCreate()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Task;
 
+use App\Enums\PermissionsEnum;
 use App\Enums\TaskStatusesEnum;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +21,7 @@ class TaskViewScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'tasks.view'
+            PermissionsEnum::TASKS_VIEW->value
         ];
     }
 

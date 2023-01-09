@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -42,6 +43,17 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'permissions' => \Orchid\Support\Facades\Dashboard::getAllowAllPermission(),
+        ]);
+    }
+
+    public function withPermisions(array $permissionsToAllow)
+    {
+        $permissions = new \Illuminate\Support\Collection();
+        foreach($permissionsToAllow as $permission) {
+            $permissions->put($permission, true);
+        }
+        return $this->state(fn (array $attributes) => [
+            'permissions' => $permissions
         ]);
     }
 }

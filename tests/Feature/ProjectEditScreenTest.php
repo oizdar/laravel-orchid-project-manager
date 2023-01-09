@@ -2,13 +2,61 @@
 
 namespace Tests\Feature;
 
+use App\Enums\PermissionsEnum;
 use App\Models\Project;
+use App\Models\User;
 use Orchid\Support\Testing\ScreenTesting;
 use Tests\FeatureTestCase;
 
 class ProjectEditScreenTest extends FeatureTestCase
 {
     use ScreenTesting;
+
+    public function testProjectCreateUnaccessibleWithoutProperPermission()
+    {
+        $user = User::factory()->create();
+        $screen = $this->screen('platform.project.create')->actingAs($user);
+
+        $screen->display()->assertStatus(403);
+
+    }
+
+    public function testProjectEditUnaccessibleWithoutProperPermission()
+    {
+        $user = User::factory()->create();
+        $project = Project::latest()->first();
+
+        $screen = $this->screen('platform.project.edit')
+            ->parameters(['id' => $project->id])
+            ->actingAs($user);
+
+        $screen->display()->assertStatus(403);
+
+    }
+
+    public function testProjectCreateAccessibleWithProperPermission()
+    {
+        $user = User::factory()
+            ->withPermisions([PermissionsEnum::PLATFORM_INDEX->value, PermissionsEnum::PROJECTS_EDIT->value])
+            ->create();
+        $screen = $this->screen('platform.project.create')->actingAs($user);
+
+        $screen->display()->assertStatus(200);
+    }
+
+    public function testProjectEditAccessibleWithProperPermission()
+    {
+        $user = User::factory()
+            ->withPermisions([PermissionsEnum::PLATFORM_INDEX->value, PermissionsEnum::PROJECTS_EDIT->value])
+            ->create();
+        $project = Project::latest()->first();
+
+        $screen = $this->screen('platform.project.edit')
+            ->parameters(['id' => $project->id])
+            ->actingAs($user);
+
+        $screen->display()->assertStatus(200);
+    }
 
     public function testProjectCreate()
     {
@@ -97,4 +145,6 @@ class ProjectEditScreenTest extends FeatureTestCase
             'id' => $project->id,
         ]);
     }
+
+
 }

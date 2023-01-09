@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Task;
 
+use App\Enums\PermissionsEnum;
 use App\Enums\TaskStatusesEnum;
 use App\Models\Task;
 use App\Orchid\Layouts\Task\TaskEditLayout;
@@ -20,7 +21,7 @@ class TaskEditScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'tasks.edit'
+            PermissionsEnum::TASKS_EDIT->value
         ];
     }
 

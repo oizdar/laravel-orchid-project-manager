@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid;
 
+use App\Enums\PermissionsEnum;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
@@ -32,23 +33,23 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('table')
                 ->route('platform.projects')
                 ->title('Projects')
-                ->permission('projects.view'),
+                ->permission(PermissionsEnum::PROJECTS_VIEW->value),
 
             Menu::make('Create Project')
                 ->icon('rocket')
                 ->route('platform.project.create')
-                ->permission('projects.edit'),
+                ->permission(PermissionsEnum::PROJECTS_EDIT->value),
 
             Menu::make('Tasks list')
                 ->icon('task')
                 ->route('platform.tasks')
                 ->title('Tasks')
-                ->permission('tasks.view'),
+                ->permission(PermissionsEnum::TASKS_VIEW->value),
 
             Menu::make('Create Task')
                 ->icon('event')
                 ->route('platform.task.create')
-                ->permission('tasks.edit'),
+                ->permission(PermissionsEnum::TASKS_EDIT->value),
 
             Menu::make('Example screen')
                 ->icon('monitor')
@@ -105,13 +106,13 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')
-                ->permission('platform.systems.users')
+                ->permission(PermissionsEnum::PLATFORM_SYSTEMS_USERS->value)
                 ->title(__('Access rights')),
 
             Menu::make(__('Roles'))
                 ->icon('lock')
                 ->route('platform.systems.roles')
-                ->permission('platform.systems.roles'),
+                ->permission(PermissionsEnum::PLATFORM_SYSTEMS_USERS->value),
         ];
     }
 
@@ -134,13 +135,13 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             ItemPermission::group(__('System'))
-                ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users'))
-                ->addPermission('projects.view', __('View Pojects'))
-                ->addPermission('projects.edit', __('Edit Pojects'))
-                ->addPermission('projects.delete', __('Edit Pojects'))
-                ->addPermission('tasks.view', __('View Tasks'))
-                ->addPermission('tasks.edit', __('Edit Tasks')),
+                ->addPermission(PermissionsEnum::PLATFORM_SYSTEMS_ROLES->value, __('Roles'))
+                ->addPermission(PermissionsEnum::PLATFORM_SYSTEMS_USERS->value, __('Users'))
+                ->addPermission(PermissionsEnum::PROJECTS_VIEW->value, __('View Pojects'))
+                ->addPermission(PermissionsEnum::PROJECTS_EDIT->value, __('Edit Pojects'))
+                ->addPermission(PermissionsEnum::PROJECTS_DELETE->value, __('Edit Pojects'))
+                ->addPermission(PermissionsEnum::TASKS_VIEW->value, __('View Tasks'))
+                ->addPermission(PermissionsEnum::TASKS_EDIT->value, __('Edit Tasks')),
         ];
     }
 }
