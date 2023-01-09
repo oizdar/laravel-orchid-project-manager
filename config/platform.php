@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'prefix'        => env('DASHBOARD_PREFIX', '/admin'),
+    'prefix'        => env('DASHBOARD_PREFIX', '/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'index'         => 'platform.main',
+    'index'         => 'platform.projects',
 
     /*
     |--------------------------------------------------------------------------
