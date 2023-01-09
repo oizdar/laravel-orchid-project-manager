@@ -24,14 +24,14 @@ class ProjectEditScreenTest extends FeatureTestCase
     public function testProjectEditUnaccessibleWithoutProperPermission()
     {
         $user = User::factory()->create();
-        $project = Project::latest()->first();
+        $project = Project::factory()->create();
+
 
         $screen = $this->screen('platform.project.edit')
             ->parameters(['id' => $project->id])
             ->actingAs($user);
 
         $screen->display()->assertStatus(403);
-
     }
 
     public function testProjectCreateAccessibleWithProperPermission()
@@ -49,7 +49,7 @@ class ProjectEditScreenTest extends FeatureTestCase
         $user = User::factory()
             ->withPermisions([PermissionsEnum::PLATFORM_INDEX->value, PermissionsEnum::PROJECTS_EDIT->value])
             ->create();
-        $project = Project::latest()->first();
+        $project = Project::factory()->create();
 
         $screen = $this->screen('platform.project.edit')
             ->parameters(['id' => $project->id])
