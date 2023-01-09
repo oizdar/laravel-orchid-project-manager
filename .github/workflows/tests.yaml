@@ -10,8 +10,6 @@ permissions:
 jobs:
   phpunit:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: postgresql://symfony:ChangeMe@localhost:5432/app?serverVersion=11&charset=utf8
     services:
       postgres:
         image: postgres:13
